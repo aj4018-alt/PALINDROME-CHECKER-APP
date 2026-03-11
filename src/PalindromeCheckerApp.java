@@ -2,7 +2,6 @@ import java.util.*;
 
 /**
  * INTERFACE - PalindromeStrategy
- * Defines a contract for all palindrome checking algorithms.
  */
 interface PalindromeStrategy {
     boolean check(String input);
@@ -10,25 +9,14 @@ interface PalindromeStrategy {
 
 /**
  * CLASS - StackStrategy
- * Provides a Stack-based implementation of the PalindromeStrategy.
  */
 class StackStrategy implements PalindromeStrategy {
-
-    /**
-     * Implements palindrome validation using a Stack (LIFO behavior).
-     * @param input String to validate
-     * @return true if palindrome, false otherwise
-     */
     @Override
     public boolean check(String input) {
-        java.util.Stack<Character> stack = new java.util.Stack<>();
-
-        // Push each character of the input string onto the stack
+        Stack<Character> stack = new Stack<>();
         for (char c : input.toCharArray()) {
             stack.push(c);
         }
-
-        // Compare characters by popping from the stack
         for (char c : input.toCharArray()) {
             if (c != stack.pop()) {
                 return false;
@@ -41,22 +29,30 @@ class StackStrategy implements PalindromeStrategy {
 /**
  * MAIN CLASS - PalindromeCheckerApp
  * ======================================================================
- * Use Case 12: Strategy Pattern for Palindrome Algorithms
+ * Use Case 13: Performance Comparison
+ * Goal: Compare the performance of different palindrome approaches.
  */
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
-        // Define input
         String input = "level";
-
-        // Select the strategy (Stack-based)
         PalindromeStrategy strategy = new StackStrategy();
 
-        // Execute the algorithm
+        // 1. Capture start time in nanoseconds
+        long startTime = System.nanoTime();
+
+        // 2. Execute the algorithm
         boolean isPalindrome = strategy.check(input);
 
-        // Display results
+        // 3. Capture end time in nanoseconds
+        long endTime = System.nanoTime();
+
+        // 4. Calculate total execution duration
+        long executionTime = endTime - startTime;
+
+        // Display results matching the required output format
         System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + isPalindrome);
+        System.out.println("Execution Time : " + executionTime + " ns");
     }
 }
