@@ -1,31 +1,61 @@
+import java.util.*;
 
-import java.util.LinkedList;
+/**
+ * INTERFACE - PalindromeStrategy
+ * Defines a contract for all palindrome checking algorithms.
+ */
+interface PalindromeStrategy {
+    boolean check(String input);
+}
 
-public class PalindromeCheckerApp {
-    public static void main(String[] args) {
-        // Define the input string
-        String input = "level";
+/**
+ * CLASS - StackStrategy
+ * Provides a Stack-based implementation of the PalindromeStrategy.
+ */
+class StackStrategy implements PalindromeStrategy {
 
-        // Create a LinkedList to store characters
-        LinkedList<Character> list = new LinkedList<>();
+    /**
+     * Implements palindrome validation using a Stack (LIFO behavior).
+     * @param input String to validate
+     * @return true if palindrome, false otherwise
+     */
+    @Override
+    public boolean check(String input) {
+        java.util.Stack<Character> stack = new java.util.Stack<>();
 
-        // Add each character to the linked list
+        // Push each character of the input string onto the stack
         for (char c : input.toCharArray()) {
-            list.add(c);
+            stack.push(c);
         }
 
-        // Flag to track palindrome state
-        boolean isPalindrome = true;
-
-        // Compare until only one or zero elements remain
-        while (list.size() > 1) {
-            // Remove and compare the first and last elements
-            if (!list.removeFirst().equals(list.removeLast())) {
-                isPalindrome = false;
-                break;
+        // Compare characters by popping from the stack
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
+                return false;
             }
         }
+        return true;
+    }
+}
 
+/**
+ * MAIN CLASS - PalindromeCheckerApp
+ * ======================================================================
+ * Use Case 12: Strategy Pattern for Palindrome Algorithms
+ */
+public class PalindromeCheckerApp {
+
+    public static void main(String[] args) {
+        // Define input
+        String input = "level";
+
+        // Select the strategy (Stack-based)
+        PalindromeStrategy strategy = new StackStrategy();
+
+        // Execute the algorithm
+        boolean isPalindrome = strategy.check(input);
+
+        // Display results
         System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + isPalindrome);
     }
